@@ -1,5 +1,5 @@
 main:
-  project_name: exercise_14
+  project_name: genres_classification_ml_pipeline
   experiment_name: dev
   execute_steps:
     - download
