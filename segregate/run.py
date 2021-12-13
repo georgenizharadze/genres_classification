@@ -24,7 +24,7 @@ def go(args):
     df = pd.read_csv(artifact_path, low_memory=False)
 
     # Split first in model_dev/test, then we further divide model_dev in train and validation
-    logger.info("Splitting data into train, val and test")
+    logger.info("Splitting data into train and test")
     splits = {}
 
     splits["train"], splits["test"] = train_test_split(

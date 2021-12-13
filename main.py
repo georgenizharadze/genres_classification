@@ -1,6 +1,7 @@
 import mlflow
 import os
 import hydra
+import omegaconf
 from omegaconf import DictConfig, OmegaConf
 
 
@@ -16,11 +17,13 @@ def go(config: DictConfig):
     root_path = hydra.utils.get_original_cwd()
 
     # Check which steps we need to execute
+    print(config["main"]["execute_steps"])
+    print(type(config["main"]["execute_steps"]))
     if isinstance(config["main"]["execute_steps"], str):
         # This was passed on the command line as a comma-separated list of steps
         steps_to_execute = config["main"]["execute_steps"].split(",")
     else:
-        assert isinstance(config["main"]["execute_steps"], list)
+        assert isinstance(config["main"]["execute_steps"], omegaconf.listconfig.ListConfig)
         steps_to_execute = config["main"]["execute_steps"]
 
     # Download step
@@ -57,7 +60,7 @@ def go(config: DictConfig):
             "main",
             parameters={
                 "reference_artifact": config["data"]["reference_dataset"],
-                "sample_name": "preprocessed_data.csv:latest",
+                "sample_artifact": "preprocessed_data.csv:latest",
                 "ks_alpha": config["data"]["ks_alpha"]
             }
         )
